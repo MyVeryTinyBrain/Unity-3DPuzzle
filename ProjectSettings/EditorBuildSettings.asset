@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/Playground.unity
+    guid: 60debf9adebbfcb4ca2241b7f021796b
+  - enabled: 1
+    path: Assets/Scenes/Escape1.unity
+    guid: 57dbd37e74a696b42b3d0997674f8df5
+  m_configObjects: {}
