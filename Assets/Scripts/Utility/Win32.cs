@@ -32,17 +32,17 @@ public class Win32Unity
     {
         repeated = false;
 #if UNITY_STANDALONE_WIN
-        Rect window;
-        if (!Win32Unity.GetWindowRect(out window))
-            return false;
-
         Vector2 mouse;
         if (!Win32Unity.GetCursorPos(out mouse))
             return false;
-
+        // 화면의 크기
+        Rect window;
+        if (!Win32Unity.GetWindowRect(out window))
+            return false;
         Vector2 limit = new Vector2(limitX, limitY);
-
         Vector2 newMouse = mouse;
+        // 마우스 커서가 화면의 경계에 근접하면,
+        // 새로운 마우스 커서 위치를 설정합니다.
         if (mouse.x < window.xMin + limit.x)
             newMouse.x = window.xMax - limit.x;
         else if (mouse.x > window.xMax - limit.x)
@@ -51,7 +51,8 @@ public class Win32Unity
             newMouse.y = window.yMax - limit.y;
         else if (mouse.y > window.yMax - limit.y)
             newMouse.y = window.yMin + limit.y;
-
+        // 이전의 마우스 위치와 다르면,
+        // 마우스 커서를 새 위치로 이동시킵니다.
         if (mouse != newMouse)
         {
             if (!Win32Unity.SetCursorPos(newMouse))

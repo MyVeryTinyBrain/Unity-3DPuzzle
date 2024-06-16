@@ -109,7 +109,10 @@ partial class OutlineRenderFeature
                 context.ExecuteCommandBuffer(cmd);
                 cmd.Clear();
 
-                DrawingSettings drawingSettings = CreateDrawingSettings(shaderTagIdList, ref renderingData, renderingData.cameraData.defaultOpaqueSortFlags);
+                DrawingSettings drawingSettings = CreateDrawingSettings(
+                    shaderTagIdList, ref renderingData, 
+                    renderingData.cameraData.defaultOpaqueSortFlags
+                    );
                 drawingSettings.overrideMaterial = normalWriteMaterial;
                 DrawingSettings occludeSettings = drawingSettings;
                 occludeSettings.overrideMaterial = normalOccludeMaterial;

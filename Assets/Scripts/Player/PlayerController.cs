@@ -33,27 +33,33 @@ public class PlayerController : CharacterControllerRigidbody
     [SerializeField, ReadOnlyInRuntime]
     public MainUI mainUI;
 
-    ControlMehtod controlMehtod;
+    float cachedBodyYAngle;
+    float cachedCameraXAngle;
+
     CMDefault cmDefault;
     CMPropHandling cmPropHandling;
     CMManualDrag cmManualDrag;
     CMItemHandling cmItemHandling;
 
-    float cachedBodyYAngle;
-    float cachedCameraXAngle;
+    // 현재 사용중인 컨트롤 방법
+    ControlMehtod controlMehtod;
 
     public void SetControlMethod(ControlMehtod cm)
     {
         if (cm == controlMehtod)
             return;
 
+        // 이전의 컨트롤 방법 사용종료 콜백 호출
         controlMehtod?.OnEndControl();
+        // 새로운 컨트 롤방법 사용시작 콜백 호출
         if (cm.OnBeginControl())
         {
             controlMehtod = cm;
         }
         else
         {
+            // 새로운 컨트롤 방법 사용시작 콜백이 false 반환하면,
+            // 새로운 컨트롤 방법을 사용하지 않습니다.
             controlMehtod?.OnBeginControl();
         }
     }
@@ -114,8 +120,11 @@ public class PlayerController : CharacterControllerRigidbody
 
         while (true)
         {
+            // 조작 불가능한 방법이면 수행하지 않습니다.
             if (controlMehtod.Controlable())
             {
+                // 캐릭터 카메라를 회전합니다.
+
                 Vector2 axis = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
                 Vector3 delta = axis * sensitivity;
 
@@ -137,9 +146,11 @@ public class PlayerController : CharacterControllerRigidbody
     {
         base.CustomMove();
 
+        // 조작 불가능한 컨트롤 방법이면 수행하지 않습니다.
         if (!controlMehtod.Controlable())
             return;
 
+        // 캐릭터를 이동합니다.
         Vector3 axis = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         Vector3 direction = transform.localToWorldMatrix.MultiplyVector(axis);
         Move(direction, speed);

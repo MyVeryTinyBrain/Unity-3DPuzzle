@@ -10,10 +10,25 @@ public class DissolvingBridge : ComponentEx
     [SerializeField]
     Collider wallCollider;
 
-    private void Awake()
+    [SerializeField, Range(0f, 1f)]
+    float cutoff = 1f;
+
+    float cachedCutoff = 1f;
+
+    protected override void Awake()
     {
-        bridgeMeshRenderer.material.SetFloat("_Cutoff", 1);
+        bridgeMeshRenderer.material.SetFloat("_Cutoff", cutoff);
+        cachedCutoff = cutoff;
         wallCollider.enabled = true;
+    }
+
+    protected override void Update()
+    {
+        if (cachedCutoff != cutoff)
+        {
+            cachedCutoff = cutoff;
+            bridgeMeshRenderer.material.SetFloat("_Cutoff", cutoff);
+        }
     }
 
     private IEnumerator ShowCoroutine()
@@ -22,16 +37,16 @@ public class DissolvingBridge : ComponentEx
 
         const float duration = 2;
         float accumulate = 0;
-        while(accumulate < duration)
+        while (accumulate < duration)
         {
             float ratio = accumulate / duration;
-            bridgeMeshRenderer.material.SetFloat("_Cutoff", 1 - ratio);
+            cutoff = 1f - ratio;
 
             accumulate += Time.deltaTime;
             yield return YieldRule.waitForEndOfFrame;
         }
 
-        bridgeMeshRenderer.material.SetFloat("_Cutoff", 0);
+        cutoff = 0f;
     }
 
     public void ShowBridge()

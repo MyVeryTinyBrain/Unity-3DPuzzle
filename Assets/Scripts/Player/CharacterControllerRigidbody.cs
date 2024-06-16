@@ -44,7 +44,11 @@ public class CharacterControllerRigidbody : ComponentEx
     public virtual void Move(Vector3 direction, float speed)
     {
         if (_isGrounded)
+        {
+            // 지면에 접지해 있을 때, 지면에 이동 벡터를 투영합니다.
+            // 이를 통해 일정한 속도로 이동할 수 있습니다.
             direction = Vector3.ProjectOnPlane(direction, _groundHit.normal);
+        }
         Vector3 delta = direction * speed * Time.deltaTime;
         character.Move(delta);
     }
@@ -78,13 +82,23 @@ public class CharacterControllerRigidbody : ComponentEx
         capsuleTrigger.radius = character.radius;
         capsuleTrigger.height = character.height;
 
+        // 캐릭터 컨트롤러 캡슐의 아래쪽부터 지면을 향한 레이입니다.
         Ray groundRay = new Ray(transform.position - transform.up * ((character.height * 0.5f) - character.radius), -transform.up);
         _isGrounded = Physics.SphereCast(groundRay, character.radius - 0.01f, out _groundHit, groundCheckEpsilon, groundCheckLayerMask.value);
-        if (_isGrounded && Mathf.Acos(Vector3.Dot(Vector3.up, _groundHit.normal)) * Mathf.Rad2Deg > character.slopeLimit)
-            _isGrounded = false;
+        // 지면과 접촉중일 때, 지면과의 각도가 일정 이상이면 지면 접지로 인식하지 않도록 구현해, 미끄러지도록 합니다.
+        if (_isGrounded)
+        {
+            float angle = Mathf.Acos(Vector3.Dot(Vector3.up, _groundHit.normal)) * Mathf.Rad2Deg;
+            if (angle > character.slopeLimit)
+            {
+                _isGrounded = false;
+            }
+        }
+        // 지면에 접지중일 때, 중력을 비활성화합니다.
         if (_isGrounded && velocity.y < 0)
         {
             velocity = Vector3.Lerp(velocity, Vector3.zero, friction * Time.deltaTime);
+            // 지면에 완전히 닿기 전에 속도가 0이 되어, 떠 있지 않도록 하는 트릭입니다.
             velocity.y = -2.0f;
         }
 
@@ -92,12 +106,14 @@ public class CharacterControllerRigidbody : ComponentEx
 
         if (!_isGrounded)
         {
+            // 접지된 콜라이더가 없으면 중력을 적용합니다.
             if (_groundHit.collider == null)
                 velocity.y += gravity * Time.deltaTime;
+            // 지면과의 각도가 일정 이상이며, 접지된 콜라이더가 있을 땐, 미끄러지도록 합니다.
             else
                 velocity += Vector3.ProjectOnPlane(Vector3.up, _groundHit.normal) * gravity * Time.deltaTime;
-
         }
+        // 속도 적용
         character.Move(velocity * Time.deltaTime);
 
         Vector3 up = transform.position + transform.up * (character.height * 0.5f - character.radius);

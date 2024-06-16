@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 오브젝트에 줌 인 하여, 해당 오브젝트를 조작합니다.
 public class CMPropHandling : ControlMehtod
 {
     PlayerController playerController;
@@ -54,15 +55,18 @@ public class CMPropHandling : ControlMehtod
 
     public override UpdateResult Update()
     {
+        // 카메라 이벤트 중에는 동작하지 않습니다.
         if (cameraTransformer.translating)
         {
             return UpdateResult.Continue;
         }
-
+        /* 오브젝트를 핸들링 할 때, 그 오브젝트에 장착되어 있는 다른 오브젝트를 습득 가능한 로직 */
+        // 현재 핸들링 중인 오브젝트를 다시 습득할 수 없습니다.
         if (Input.GetMouseButtonDown(0) && objectPicker.focused && handlingObject)
         {
             objectPicker.enabled = false;
         }
+        // 현재 핸들링 중인 오브젝트가 아니면 습득할 수 있습니다.
         if (Input.GetMouseButtonUp(0) || (!handlingObject && !objectPicker.enabled))
         {
             objectPicker.enabled = true;

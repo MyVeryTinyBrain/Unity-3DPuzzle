@@ -21,3 +21,4 @@ public class OutlinePostProcess : VolumeComponent, IPostProcessComponent
 
     public bool IsTileCompatible() => true;
 }
+

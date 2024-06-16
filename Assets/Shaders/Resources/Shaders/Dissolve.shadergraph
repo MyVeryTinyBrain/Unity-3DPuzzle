@@ -200,7 +200,14 @@
         }
     ],
     "m_GroupDatas": [],
-    "m_StickyNoteDatas": [],
+    "m_StickyNoteDatas": [
+        {
+            "m_Id": "8fae9f95432e4a16bea53986e6e7483e"
+        },
+        {
+            "m_Id": "23af7b792eeb40d79d86e770baa15fe4"
+        }
+    ],
     "m_Edges": [
         {
             "m_OutputSlot": {
@@ -986,9 +993,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -759.0,
-            "y": 854.0,
-            "width": 108.0,
+            "x": -833.0,
+            "y": 1148.0001220703125,
+            "width": 107.99993896484375,
             "height": 34.0
         }
     },
@@ -1192,8 +1199,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2601.0,
-            "y": 1160.0,
+            "x": -2739.0,
+            "y": 1471.0,
             "width": 128.0,
             "height": 101.0
         }
@@ -1503,9 +1510,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -611.0,
-            "y": 1156.0,
-            "width": 207.99996948242188,
+            "x": -684.9999389648438,
+            "y": 1467.0001220703125,
+            "width": 207.99993896484376,
             "height": 302.0
         }
     },
@@ -1595,6 +1602,26 @@
         "e31": 0.0,
         "e32": 0.0,
         "e33": 1.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "23af7b792eeb40d79d86e770baa15fe4",
+    "m_Title": "디졸브 경계",
+    "m_Content": "이 값을 디졸브 경계로 사용합니다.\nWidth 값에 의해 경계의 두께를 설정할 수 있습니다.",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": -449.0,
+        "y": 1088.0,
+        "width": 200.0,
+        "height": 100.0
+    },
+    "m_Group": {
+        "m_Id": ""
     }
 }
 
@@ -1715,8 +1742,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2256.0,
-            "y": 1059.0,
+            "x": -2394.0,
+            "y": 1370.0,
             "width": 128.0,
             "height": 101.0
         }
@@ -1966,9 +1993,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -292.0,
-            "y": 554.9999389648438,
-            "width": 141.99996948242188,
+            "x": -430.0001220703125,
+            "y": 866.0000610351563,
+            "width": 142.0,
             "height": 34.0
         }
     },
@@ -2194,8 +2221,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2425.0,
-            "y": 1160.0,
+            "x": -2563.0,
+            "y": 1471.0,
             "width": 129.0,
             "height": 94.0
         }
@@ -2495,9 +2522,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1273.0001220703125,
-            "y": 1458.0,
-            "width": 208.0001220703125,
+            "x": -1181.0,
+            "y": 1456.0001220703125,
+            "width": 208.0,
             "height": 326.0
         }
     },
@@ -3012,9 +3039,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -272.0000305175781,
-            "y": 854.0,
-            "width": 207.9999542236328,
+            "x": -409.9999694824219,
+            "y": 1165.0,
+            "width": 207.9998016357422,
             "height": 302.0
         }
     },
@@ -3152,10 +3179,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 30.99999237060547,
-            "y": 428.0,
-            "width": 208.00003051757813,
-            "height": 325.99993896484377
+            "x": -106.99990844726563,
+            "y": 739.0,
+            "width": 207.99981689453126,
+            "height": 326.0
         }
     },
     "m_Slots": [
@@ -3373,9 +3400,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1011.0,
-            "y": 1059.0,
-            "width": 208.0,
+            "x": -937.0000610351563,
+            "y": 1182.0001220703125,
+            "width": 208.0001220703125,
             "height": 302.0
         }
     },
@@ -3706,6 +3733,26 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "8fae9f95432e4a16bea53986e6e7483e",
+    "m_Title": "투명도",
+    "m_Content": "이 값을 투명도로 사용합니다.",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": -698.0,
+        "y": 1090.0,
+        "width": 200.0,
+        "height": 100.0
+    },
+    "m_Group": {
+        "m_Id": ""
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "90ec4126c88244c084c67c2d701fd09f",
     "m_Id": -1627577086,
@@ -3731,8 +3778,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -3092.000244140625,
-            "y": 1059.0001220703125,
+            "x": -3230.0,
+            "y": 1370.0,
             "width": 208.0,
             "height": 278.0
         }
@@ -4116,9 +4163,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -759.0,
-            "y": 1156.0,
-            "width": 108.0,
+            "x": -833.0,
+            "y": 1484.0001220703125,
+            "width": 107.99993896484375,
             "height": 34.0
         }
     },
@@ -4201,9 +4248,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -611.0,
-            "y": 854.0,
-            "width": 207.99996948242188,
+            "x": -684.9999389648438,
+            "y": 1165.0001220703125,
+            "width": 207.99993896484376,
             "height": 302.0
         }
     },
@@ -4264,9 +4311,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1147.0001220703125,
-            "y": 1059.0,
-            "width": 106.0001220703125,
+            "x": -1117.0,
+            "y": 1383.0001220703125,
+            "width": 105.99993896484375,
             "height": 34.0
         }
     },
@@ -4565,10 +4612,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2788.0,
-            "y": 1059.0,
+            "x": -2926.0,
+            "y": 1370.0,
             "width": 120.0,
-            "height": 149.0
+            "height": 149.0001220703125
         }
     },
     "m_Slots": [
@@ -4659,10 +4706,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2034.0,
-            "y": 1059.0,
+            "x": -2172.0,
+            "y": 1370.0,
             "width": 208.0,
-            "height": 302.0
+            "height": 302.0001220703125
         }
     },
     "m_Slots": [
@@ -5233,8 +5280,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2425.0,
-            "y": 1059.0,
+            "x": -2563.0,
+            "y": 1370.0,
             "width": 129.0,
             "height": 94.0
         }
@@ -5788,8 +5835,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1685.0,
-            "y": 1059.0,
+            "x": -1452.0,
+            "y": 1456.0001220703125,
             "width": 208.0,
             "height": 302.0
         }
@@ -6010,8 +6057,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2601.0,
-            "y": 1059.0,
+            "x": -2739.0,
+            "y": 1370.0,
             "width": 128.0,
             "height": 101.0
         }
@@ -6265,8 +6312,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -3325.000244140625,
-            "y": 1059.0001220703125,
+            "x": -3463.0,
+            "y": 1370.0,
             "width": 208.0,
             "height": 315.0
         }

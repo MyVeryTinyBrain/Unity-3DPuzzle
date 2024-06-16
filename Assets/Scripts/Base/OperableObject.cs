@@ -324,7 +324,9 @@ public class AxisSpinnable : Spinnable
 
     private float CalculateAngle(int inNumber)
     {
+        // 입력된 번호를 최소~최대 사이에서 반복되게 합니다.
         inNumber = RepeatNumber(inNumber);
+        // 번호에 해당하는 각도를 계산합니다.
         float angleByNumber = angleStep * ((maxNumber + 1) - inNumber);
         return Mathf.Repeat(angleByNumber, 360);
     }
@@ -377,14 +379,19 @@ public class AxisSpinnable : Spinnable
 
     private IEnumerator FixAngleCoroutine()
     {
+        // 현재 각도와 가장 근접한 면의 각도를 찾습니다.
         float targetAngle = CalculateAngle(targetNumber);
-
+        // 해당 각도로 회전합니다.
         while (!Mathf.Approximately(angle, targetAngle))
         {
             yield return YieldRule.waitForEndOfFrame;
-            angle = Mathf.MoveTowardsAngle(angle, targetAngle, fixSpinAngularSpeed * Time.deltaTime);
+            angle = Mathf.MoveTowardsAngle(
+                angle, 
+                targetAngle, 
+                fixSpinAngularSpeed * Time.deltaTime
+                );
         }
-
+        // 해당하는 번호로 재설정합니다.
         SetNumberAndAngle(targetNumber);
     }
 
@@ -422,25 +429,29 @@ public class AxisSpinnable : Spinnable
 
         bool repeated;
         Rect window;
+        // 마우스가 화면 경계에 도달하면 반대쪽으로 이동시킵니다.
         Win32Unity.RepeatCursor(out repeated);
         Win32Unity.GetWindowRect(out window);
 
+        // 스크린 공간에서 드래그하기 위해,
+        // 내적에 사용할 월드 공간의 방향 벡터를 계산합니다.
         Vector3 projVec = Vector3.zero;
         switch (axis)
         {
             case Axis.X:
-            projVec = Vector3.Cross(transform.forward, Camera.main.transform.right).normalized;
+            projVec = Vector3.Cross(transform.forward, Camera.main.transform.right);
             break;
 
             case Axis.Y:
-            projVec = Vector3.Cross(transform.up, Camera.main.transform.forward).normalized;
+            projVec = Vector3.Cross(transform.up, Camera.main.transform.forward);
             break;
 
             case Axis.Z:
-            projVec = Vector3.Cross(transform.right, Camera.main.transform.up).normalized;
+            projVec = Vector3.Cross(transform.right, Camera.main.transform.up);
             break;
         }
-
+        projVec.Normalize();
+        // 방향 벡터를 스크린 공간으로 변환합니다.
         Vector3 v = Camera.main.worldToCameraMatrix.MultiplyVector(projVec);
         Vector4 p = Camera.main.projectionMatrix.MultiplyVector(v).normalized;
         p.z = 0;
@@ -449,13 +460,21 @@ public class AxisSpinnable : Spinnable
 
         float deltaMultiplier = 1;
         if (axis == Axis.Y)
+        {
             deltaMultiplier = -1;
+        }
+        // 스크린 공간에서 마우스의 드래그 방향과 축 벡터와 내적한 결과를 회전크기로 사용합니다.
         float delta = Vector3.Dot(eventData.delta, p) * spinWeight;
 
-        if (Mathf.Abs(eventData.delta.x) < window.width * 0.5f && Mathf.Abs(eventData.delta.y) < window.height * 0.5f)
+        // 해당 프레임에서의 마우스 이동 거리가 화면의 절반을 넘지 않을 때만 회전합니다.
+        // 게임의 프리징 또는 마우스가 반대쪽으로 이동했을 때,
+        // 크게 회전하는 현상을 방지하기 위함입니다.
+        if (Mathf.Abs(eventData.delta.x) < window.width * 0.5f && 
+            Mathf.Abs(eventData.delta.y) < window.height * 0.5f)
         {
             angle += delta * deltaMultiplier;
         }
+        // 현재 각도에 해당하는 번호로 설정합니다.
         targetNumber = CalculateNumber(angle);
     }
 }
@@ -475,9 +494,12 @@ public class FreeSpinnable : Spinnable
 
         bool repeated;
         Rect window;
+        // 마우스가 화면 경계에 도달하면 반대쪽으로 이동시킵니다.
         Win32Unity.RepeatCursor(out repeated);
         Win32Unity.GetWindowRect(out window);
 
+        // 해당 프레임에서의 마우스 이동 거리가 화면의 절반을 넘지 않을 때만 회전합니다.
+        // 게임의 프리징 또는 마우스가 반대쪽으로 이동했을 때, 크게 회전하는 현상을 방지하기 위함입니다.
         if (Mathf.Abs(eventData.delta.x) < window.width * 0.5f && Mathf.Abs(eventData.delta.y) < window.height * 0.5f)
         {
             const float sensitivity = 0.25f;

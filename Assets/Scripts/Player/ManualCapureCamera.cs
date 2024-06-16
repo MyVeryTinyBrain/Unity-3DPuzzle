@@ -53,8 +53,11 @@ public class ManualCapureCamera : ComponentEx
             renderTextures.Add(CreateRT(targetTextureSize, depthBufferBits));
     }
 
-    public void Capture(Vector2Int targetTextureSize, int count, Action<Camera, int> beginCaptureAction = null, Action<Camera, int> endCaptureAction = null)
+    public void Capture(Vector2Int targetTextureSize, 
+        int count, Action<Camera, int> beginCaptureAction = null, 
+        Action<Camera, int> endCaptureAction = null)
     {
+        // 렌더 텍스쳐가 아이템 개수와 일치하도록 합니다.
         ReserveRenderTextures(targetTextureSize, count);
 
         camera.enabled = true;

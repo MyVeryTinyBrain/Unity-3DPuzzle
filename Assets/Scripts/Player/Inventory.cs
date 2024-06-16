@@ -149,12 +149,14 @@ public class Inventory : ComponentEx
         float accumulate = 0.0f;
         Vector3 itemPickedUpPosition = handlingItem.transform.position;
         Quaternion itemPickedUpRotation = handlingItem.transform.rotation;
+
         while (accumulate < duration)
         {
             yield return YieldRule.waitForEndOfFrame;
 
             accumulate += Time.deltaTime;
             float ratio = Mathf.Clamp(accumulate / duration, 0.0f, 1.0f);
+            // 지속 시간동안 아이템을 인벤토리로 이동합니다.
             handlingItem.transform.position = Vector3.Lerp(itemPickedUpPosition, itemPivot.transform.position, ratio);
             handlingItem.transform.rotation = Quaternion.Lerp(itemPickedUpRotation, itemPivot.transform.rotation, ratio);
         }
@@ -172,7 +174,7 @@ public class Inventory : ComponentEx
         {
             accumulate += Time.deltaTime;
             float ratio = Mathf.Clamp(accumulate / duration, 0.0f, 1.0f);
-
+            // 지속 시간동안 아이템을 아이템 소켓 위치로 이동합니다.
             handlingItem.transform.position = Vector3.Lerp(itemPivot.transform.position, itemSocket.itemTransform.position, ratio);
             handlingItem.transform.rotation = Quaternion.Lerp(itemPivot.transform.rotation, itemSocket.itemTransform.rotation, ratio);
 
@@ -235,29 +237,38 @@ public class Inventory : ComponentEx
 
         const float distance = 0.5f;
 
+        // 현재 들고있는 아이템의 위치, 회전, 레이어를 백업합니다.
         Vector3 currentItemPosition = currentItemIndex >= 0 ? items[currentItemIndex].transform.position : Vector3.zero;
         Quaternion currentItemRotation = currentItemIndex >= 0 ? items[currentItemIndex].transform.rotation : Quaternion.identity;
         int currentItemLayer = currentItemIndex >= 0 ? items[currentItemIndex].gameObject.layer : Layers.instance.StoredOwningPropLayerIndex;
 
+        // 보유한 모든 아이템의 레이어를 임시로 변경합니다.
         foreach (ItemObject item in items)
             item.SetChildLayers(Layers.instance.OwningPropLayerIndex);
 
+        // 캡쳐 전에 호출할 함수입니다. 오브젝트를 캡쳐하기 위한 상태로 변경합니다.
         Action<Camera, int> beginCaptureAction = (camera, index) => {
+            // 캡쳐할 오브젝트를 캡쳐 위치로 이동합니다.
             items[index].transform.position = transform.position;
             items[index].transform.rotation = transform.rotation;
+            // 캡쳐 가능한 레이어로 변경합니다.
             items[index].SetChildLayers(Layers.instance.StoredOwningPropLayerIndex);
+            // 카메라가 아이템의 정면에 위치하도록 합니다.
             camera.transform.position = transform.position - items[index].transform.forward * distance;
             camera.transform.rotation = items[index].transform.rotation;
         };
+        // 캡쳐 후에 호출할 함수입니다. 오브젝트 상태를 되돌립니다.
         Action<Camera, int> endCaptureAction = (camera, index) => {
+            // 들고 있던 아이템이면 원래 위치로 이동시킵니다.
             if (index == currentItemIndex)
             {
                 items[index].transform.position = currentItemPosition;
                 items[index].transform.rotation = currentItemRotation;
             }
+            // 원래 레이어로 돌립니다.
             items[index].SetChildLayers(Layers.instance.OwningPropLayerIndex);
         };
-
+        // 모든 아이템을 캡쳐합니다.
         storedOwningPropCamera.Capture(RTSize, items.Count, beginCaptureAction, endCaptureAction);
 
         for (int i = 0; i < items.Count; ++i)

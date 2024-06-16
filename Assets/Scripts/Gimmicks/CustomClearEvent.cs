@@ -13,7 +13,7 @@ public class CustomClearEvent : MonoBehaviour
     [SerializeField]
     float cameraTranslateDuration = 5;
 
-    private IEnumerator EventCoroutine(float duration)
+    private IEnumerator HearEventCoroutine(float duration)
     {
         yield return new WaitForSeconds(duration);
         playerController.cameraTransformer.SimpleTranslate(cameraTranslateDuration, cameraTarget);
@@ -22,9 +22,21 @@ public class CustomClearEvent : MonoBehaviour
         playerController.mainUI.ShowHeartAndMent(3, 2);
     }
 
-    public void StartEvent()
+    private IEnumerator SimpleEventCoroutine(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        playerController.mainUI.ShowSimpleClear(3);
+    }
+
+    public void StartHearEvent()
     {
         playerController.SetControlMethod(new NothingMethod());
-        StartCoroutine(EventCoroutine(1.0f));
+        StartCoroutine(HearEventCoroutine(1.0f));
+    }
+
+    public void StartSimpleEvent()
+    {
+        playerController.SetControlMethod(new NothingMethod());
+        StartCoroutine(SimpleEventCoroutine(1.0f));
     }
 }
